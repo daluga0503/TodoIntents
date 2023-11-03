@@ -1,9 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- TODO: Dar formato al item para que se vea titulo, descripción y estado dentro de un MaterialCard -->
-    <!-- TODO: Añadir Botón de detalle -->
-    <!-- TODO: Añadir botón de compartir -->
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="286dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="248dp"
+            android:layout_height="43dp"
+            android:hint="Titulo"
+            tools:text="Titulo">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="343dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="8dp"
+            tools:text="Descripcion">
+
+        </TextView>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:checked="false"
+            android:text="Realizado">
+
+        </com.google.android.material.materialswitch.MaterialSwitch>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/compartirButton"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:text="Compartir"
+            app:icon="@drawable/ic_share" />
+
+        <Button
+            android:id="@+id/editarButton"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:text="Editar"
+            app:icon="@drawable/ic_edit" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
