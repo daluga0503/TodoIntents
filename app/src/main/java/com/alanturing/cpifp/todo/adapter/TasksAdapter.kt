@@ -8,8 +8,9 @@ import com.alanturing.cpifp.todo.data.TaskLocalRepository
 import com.alanturing.cpifp.todo.databinding.TodoItemBinding
 import com.alanturing.cpifp.todo.model.Task
 
-class TasksAdapter(val datos:List<Task>,
-                   val onShare:((t:Task, v:View)->Unit)): RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
+class TasksAdapter(private val repository: TaskLocalRepository,
+                   val onShare:((t:Task, v:View)->Unit),
+                   val onEdit: ((t:Task)->Unit)): RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
     inner class TaskViewHolder(val binding: TodoItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bindTask(t:Task){
             //TODO("Asignar los elementos de pantalla")
@@ -18,6 +19,9 @@ class TasksAdapter(val datos:List<Task>,
             binding.switchItem.isChecked = t.isCompleted
             binding.compartirButton.setOnClickListener{
                 onShare(t,it)
+            }
+            binding.editarButton.setOnClickListener{
+                onEdit(t)
             }
         }
     }
@@ -31,14 +35,13 @@ class TasksAdapter(val datos:List<Task>,
 
     override fun getItemCount(): Int {
         //TODO("Not yet implemented")
-        return datos.size
+        return repository.tasks.size
     }
 
     //inyeccion formulario en la lista de tareas
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         //TODO("Not yet implemented")
-        val task  = datos[position]
-        holder.bindTask(task)
+        holder.bindTask(repository.tasks[position])
 
     }
 }
