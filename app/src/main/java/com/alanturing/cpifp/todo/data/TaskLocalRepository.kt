@@ -24,21 +24,19 @@ class TaskLocalRepository() {
 
     fun add(task:Task) {
         //TODO("Código crear tarea")
-        _tasks.add(task)
+        task.id = contadorId++
+        this._tasks.add(task)
     }
     fun delete(id:Int) {
         //TODO("Código eliminar tarea por id")
     }
     fun update(task:Task) {
         val tareaParaActualizar:Task? = _tasks.find { t -> t.id == task.id }
-        tareaParaActualizar?.apply {
-            description = task.description
-            title = task.title
-            isCompleted = task.isCompleted
+        if (tareaParaActualizar!=null){
+            val index = _tasks.indexOf(tareaParaActualizar)
+            if (index != -1){
+                _tasks[index]= task
+            }
         }
-    }
-
-    fun getNextTaskId():Int {
-        return ++ contadorId
     }
 }
