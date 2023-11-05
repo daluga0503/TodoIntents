@@ -51,17 +51,18 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, shareText )
+            type = "text/plain"
         }
         val shareIntent = Intent.createChooser(intent, null)
         startActivity(shareIntent)
     }
 
     private fun onEditItem(task: Task){
-        val intent = Intent(this, EditToDoActivity::class.java)
+        val editIntent = Intent(this, EditToDoActivity::class.java)
         val bundle = Bundle()
         bundle.putSerializable("Task", task)
-        intent.putExtras(bundle)
-        startActivity(intent)
+        editIntent.putExtras(bundle)
+        startActivity(editIntent)
     }
 
 
