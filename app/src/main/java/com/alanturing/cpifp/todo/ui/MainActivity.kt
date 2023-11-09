@@ -1,37 +1,42 @@
-package com.alanturing.cpifp.todo
+package com.alanturing.cpifp.todo.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.alanturing.cpifp.todo.R
 import com.alanturing.cpifp.todo.adapter.TasksAdapter
-import com.alanturing.cpifp.todo.data.TaskLocalRepository
 import com.alanturing.cpifp.todo.databinding.ActivityMainBinding
 import com.alanturing.cpifp.todo.model.Task
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val repository = TaskLocalRepository.getInstance()
-
+    // ya no hace falta por el viewModel private val repository = TaskLocalRepository.getInstance()
+    private val viewModel:TaskViewModel by viewModels()
+    /*
     private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         when (it.resultCode){
             Activity.RESULT_OK ->{
-                binding.tasks.adapter = TasksAdapter(repository.tasks,::onShareItem,::onEditItem)
+                binding.tasks.adapter = TasksAdapter(viewModel.data.value!!,::onShareItem,::onEditItem)
             }
             Activity.RESULT_CANCELED -> {
                 Snackbar.make(this, binding.root, "Se ha cancelado", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
+    */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.topAppBar)
 
-        binding.tasks.adapter = TasksAdapter(repository.tasks,::onShareItem,::onEditItem)
+        binding.tasks.adapter = TasksAdapter(viewModel.data.value!!,::onShareItem,::onEditItem)
+        val taskObserver = Observer<List<Task>>{}
+        viewModel.data.observe(this, taskObserver)
 
 
         //TODO("Recuperar el RecyclerView y asignar el adaptador")
@@ -40,7 +45,8 @@ class MainActivity : AppCompatActivity() {
             val createIntent = Intent(this, CreateToDoActivity::class.java)
             //startActivityForResult(createIntent, 1)
             //startActivity(createIntent)
-            getResult.launch(createIntent)
+            //getResult.launch(createIntent)
+            startActivity(createIntent)
         }
     }
 
@@ -60,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     private fun onEditItem(task: Task){
         val editIntent = Intent(this, EditToDoActivity::class.java)
         val bundle = Bundle()
-        bundle.putSerializable("Task", task)
+        bundle.putParcelable("Task", task)
         editIntent.putExtras(bundle)
         startActivity(editIntent)
     }

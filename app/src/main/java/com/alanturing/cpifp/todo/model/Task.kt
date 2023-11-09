@@ -1,10 +1,11 @@
 package com.alanturing.cpifp.todo.model
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 data class Task(
     var id:Int,
     val title:String,
     val description:String,
-    val isCompleted: Boolean = false): Serializable
+    val isCompleted: Boolean = false): Parcelable

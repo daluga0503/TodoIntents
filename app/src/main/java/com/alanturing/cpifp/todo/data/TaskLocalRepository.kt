@@ -27,15 +27,19 @@ class TaskLocalRepository() {
         task.id = contadorId++
         this._tasks.add(task)
     }
+
+    fun getNextTaskId():Int{
+        return ++contadorId
+    }
     fun delete(id:Int) {
         //TODO("Código eliminar tarea por id")
     }
     fun update(task:Task) {
         val tareaParaActualizar:Task? = _tasks.find { t -> t.id == task.id }
-        if (tareaParaActualizar!=null){
+        if (tareaParaActualizar!=null) {
             val index = _tasks.indexOf(tareaParaActualizar)
-            if (index != -1){
-                _tasks[index]= task
+            if (index != -1) {
+                _tasks[index] = task
             }
         }
     }
